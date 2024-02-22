@@ -15,6 +15,13 @@ class _CurrencyConvertorMaterialPageestate
     extends State<CurrencyConvertorMaterialPagee> {
   final TextEditingController textEditingController = TextEditingController();
   double result = 0;
+
+  void convert() {
+    setState(() {
+      result = double.parse(textEditingController.text) * 81;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bo = OutlineInputBorder(
@@ -37,51 +44,44 @@ class _CurrencyConvertorMaterialPageestate
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              ('INR $result'),
+              ('INR ${result != 0 ? result.toStringAsFixed(3) : result.toStringAsFixed(0)}'),
               style: const TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                style: const TextStyle(color: Colors.black),
-                controller: textEditingController,
-                decoration: InputDecoration(
-                    hintText: 'Please enter the amount in USD',
-                    hintStyle: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    prefixIcon: const Icon(Icons.monetization_on_outlined),
-                    prefixIconColor: Colors.black,
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: bo,
-                    enabledBorder: bo),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+            TextField(
+              style: const TextStyle(color: Colors.black),
+              controller: textEditingController,
+              decoration: InputDecoration(
+                  hintText: 'Please enter the amount in USD',
+                  hintStyle: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  prefixIcon: const Icon(Icons.monetization_on_outlined),
+                  prefixIconColor: Colors.black,
+                  filled: true,
+                  fillColor: Colors.white,
+                  focusedBorder: bo,
+                  enabledBorder: bo),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    result = double.parse(textEditingController.text) * 81;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: convert,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Text("Convert"),
               ),
+              child: const Text("Convert"),
             ),
           ],
         ),
